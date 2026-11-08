@@ -34,4 +34,5 @@ for lang in ['en','ru']:
  s=s.replace('</body>','<script src="../assets/catalog.js"></script></body>')
  home.write_text(s)
  if lang=='ru':(root/'dist/index.html').write_text(s.replace('src="../assets/catalog.js"','src="./assets/catalog.js"'))
-print('Generated 33 new exercise pages per language; 36 total exercises.')
+print('Generated 36 exercise pages per language; upgrading squat model.')
+runpy.run_path(str(root/'build_squat.py'))

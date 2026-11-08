@@ -2,7 +2,7 @@
 
 Standalone bilingual adaptation of the public interactive biomechanics simulations at https://cualigrafia.com/.
 
-36 exercises in English and Russian: three original full simulators plus 33 new educational exercise pages with technique cues and a single-joint lever explorer. Search by name/muscle and filter by group or format. The explorer isolates F × perpendicular moment arm; it is not a complete exercise-specific biomechanical simulation.
+36 exercises in English and Russian: three original full simulators, one new multi-segment squat model and 32 educational exercise pages with technique cues and a single-joint lever explorer. Search by name/muscle and filter by group or format. The explorer isolates F × perpendicular moment arm; it is not a complete exercise-specific biomechanical simulation.
 
 ## Pages
 
@@ -24,3 +24,9 @@ Regenerate the exercise library with `python expand.py`. Exercise copy is stored
 Run `python validate.py` for local asset/link and script syntax checks. Browser visual QA was unavailable in the authoring environment.
 
 The simplified biomechanical models illustrate trends; they do not measure individual muscle activity.
+
+## Multi-segment squat v1
+
+The barbell squat now has a sagittal linked-segment model, adjustable mass/geometry/load/depth/tempo, dynamic and quasi-static net joint moments, implied ground reaction and required centre of pressure, playback and per-repetition curves. Infeasible poses/contact are flagged. Read [the model assumptions and verification](docs/squat-model.md) before interpreting results: this is prescribed-motion inverse dynamics, not a free-running or experimentally validated muscle simulation.
+
+Run `node test-squat.cjs` and `node test-squat-ui.cjs`. `python expand.py` regenerates both language pages via `build_squat.py`. The GitHub Actions workflow runs all checks before deploying Pages.

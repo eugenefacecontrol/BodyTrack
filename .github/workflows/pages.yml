@@ -34,6 +34,10 @@ jobs:
           node --check dist/assets/catalog.js
           node --check dist/assets/explorer.js
           node test-explorer.cjs
+          node --check dist/assets/squat-model.js
+          node --check dist/assets/squat-ui.js
+          node test-squat.cjs
+          node test-squat-ui.cjs
           python scripts/test_pages.py
       - name: Prepare repository-relative Pages links
         env:

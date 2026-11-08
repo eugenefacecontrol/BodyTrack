@@ -18,7 +18,7 @@ M_J = 1/2 Σ[(x_i-x_J)m_i(g+a_yi) - (y_i-y_J)m_i a_xi + I_i α_i].
 
 The half is bilateral load sharing. Moments are signed internal net joint moments, positive counter-clockwise on the proximal free body. Hip includes upper body and bar; knee adds both thighs; ankle adds both shanks. The calculation includes segment weights, bar weight and inertia. Quasi-static mode sets accelerations to zero at the same poses. Moment magnitudes do not describe muscle activation or joint contact forces.
 
-Ground reaction is F=(Σm a_x, Σm(g+a_y)). Required centre of pressure is Σ[x m(g+a_y)-y m a_x+I α]/F_y. We display the implied resultant for the two feet. Contact feasibility requires F_y>0 and COP within the assumed foot interval; it does not include a friction test. Infeasible states remain visible, with flagged outputs rather than silent contact corrections.
+Ground reaction is F=(Σm a_x, Σm(g+a_y)). Required centre of pressure is Σ[x m(g+a_y)-y m a_x+I α]/F_y. We display the implied resultant for the two feet. Geometries with the hip below ankle height are also flagged. Contact feasibility requires F_y>0 and COP within the assumed foot interval; it does not include a friction test. Infeasible states remain visible, with flagged outputs rather than silent contact corrections.
 
 ## Verification and limits
 

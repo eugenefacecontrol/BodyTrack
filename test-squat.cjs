@@ -15,4 +15,5 @@ const slow=M.parameters({period:12}),fast=M.parameters({period:2});for(const k o
 assert(Math.abs(M.state(p,.2).moments.hip-M.state(p,1.2).moments.hip)<.001);
 assert.throws(()=>M.parameters({mass:NaN}));assert.throws(()=>M.parameters({period:0}));
 let limited=0;for(const depth of [30,90,145])for(const thigh of [.3,.65])for(const shinAngle of [5,45])for(const load of [0,200])for(const q of [0,.25,.5,.75,1]){const a=M.state(M.parameters({depth,thigh,shinAngle,load}),q);for(const n of Object.values(a.moments))assert(Number.isFinite(n));if(!a.valid)limited++;}assert(limited>0);
-console.log('PASS: squat geometry, mass, free-body moments, COP, inertial T^-2 scaling, limits and 240 parameter states.');
+const double=M.state(M.parameters({mass:160,load:80}),.3),single=M.state(p,.3);for(const k of ['hip','knee','ankle'])assert(Math.abs(double.moments[k]-2*single.moments[k])<.001);
+console.log('PASS: squat geometry, mass, free-body moments, COP, inertial T^-2 scaling, limits and 120 parameter states.');

@@ -30,7 +30,7 @@ function state(p,phase,mode='dynamic'){
  const moments={hip:moment(s.hip,['upper','bar']),knee:moment(s.knee,['thigh','upper','bar']),ankle:moment(s.ankle,['shank','thigh','upper','bar'])};
  const Fy=bodies.reduce((sum,v)=>sum+v.m*(G+v.ay),0),Fx=bodies.reduce((sum,v)=>sum+v.m*v.ax,0);
  const totalMoment=bodies.reduce((sum,v)=>sum+v.c.x*v.m*(G+v.ay)-v.c.y*v.m*v.ax+v.I*v.alpha,0),cop=Fy>0?totalMoment/Fy:null;
- return {...s,bodies,moments,Fx,Fy,cop,valid:!s.limited&&Fy>0&&cop>=-.09&&cop<=.20,phase};
+ return {...s,bodies,moments,Fx,Fy,cop,valid:!s.limited&&s.hip.y>=.08&&Fy>0&&cop>=-.09&&cop<=.20,phase};
 }
 function cycle(p,mode='dynamic',count=101){return Array.from({length:count},(_,i)=>state(p,i/(count-1),mode));}
 return {G,defaults,bounds,parameters,pose,state,cycle};

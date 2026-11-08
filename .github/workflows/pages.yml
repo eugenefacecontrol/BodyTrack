@@ -1,0 +1,64 @@
+name: Check and deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate exercise catalogue
+        run: python expand.py
+      - name: Validate pages and simulator scripts
+        run: |
+          python validate.py
+          node --check dist/assets/catalog.js
+          node --check dist/assets/explorer.js
+          node test-explorer.cjs
+          python scripts/test_pages.py
+      - name: Prepare repository-relative Pages links
+        env:
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+        run: python scripts/prepare_pages.py --base-path "/$REPOSITORY_NAME"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Publish site
+        id: deployment
+        uses: actions/deploy-pages@v4
